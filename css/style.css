@@ -126,7 +126,7 @@ header nav a:hover {
 
 /* Usamos flex para que las tarjetas se acomoden */
 
-.galletas, .donas, .chocobombas {
+.galletas, .donas, .chocolateria {
     display: flex;
     gap: 30px;
     flex-wrap: wrap; 
@@ -137,7 +137,7 @@ header nav a:hover {
     margin-right: auto;
 }
 
-.galletas h3 , .donas h3, .chocobombas h3 {
+.galletas h3 , .donas h3, .chocoloateria h3 {
     width: 100%; /* Empuja a las tarjetas hacia abajo */
     color: var(--texto-oscuro);
     font-size: 1.8rem;
