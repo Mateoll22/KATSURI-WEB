@@ -172,7 +172,7 @@ header nav a:hover {
     height: 200px;
     object-fit: cover;
     border-radius: 10px;
-    border-bottom: 15px;
+    margin-bottom: 15px;
     background-color: var(--rosa-principal); /* Fondo por si no hay foto */
 }
 
