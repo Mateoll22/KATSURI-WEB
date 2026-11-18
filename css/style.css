@@ -123,9 +123,10 @@ header nav a:hover {
     margin-bottom: 2rem;
 }
 
+
 /* Usamos flex para que las tarjetas se acomoden */
 
-.galletas, .donas {
+.galletas, .donas, .chocobombas {
     display: flex;
     gap: 30px;
     flex-wrap: wrap; 
@@ -136,11 +137,11 @@ header nav a:hover {
     margin-right: auto;
 }
 
-.galletas h3 , .donas h3 {
+.galletas h3 , .donas h3, .chocobombas h3 {
     width: 100%; /* Empuja a las tarjetas hacia abajo */
     color: var(--texto-oscuro);
     font-size: 1.8rem;
-    margin-bottom: 1rem;
+    margin-bottom: 5px;
     text-align: left;
     border-bottom: 2px solid var(--rosa-medio);
     padding-bottom: 10px;
@@ -244,4 +245,28 @@ header nav a:hover {
 
 #contacto a:hover {
     color: var(--rosa-principal); /* Se vuelve rosado pastel al pasar el mouse */
+}
+
+/* EL CONTENEDOR DEL TÍTULO Y SUBTÍTULO */
+.titulo-seccion {
+    width: 100%; /* Esta es la línea mágica que ocupa toda la fila y empuja los postres abajo */
+    text-align: left;
+    margin-bottom: 2rem; 
+}
+
+/* EL TÍTULO (<h3>) */
+.titulo-seccion h3 {
+    color: var(--texto-oscuro);
+    font-size: 1.8rem;
+    margin-bottom: 5px; /* Margen diminuto para que el texto de abajo se pegue */
+    border-bottom: 2px solid var(--rosa-medio);
+    padding-bottom: 5px;
+}
+
+/* EL TEXTO DE RELLENOS */
+.titulo-seccion .info-rellenos {
+    color: var(--texto-oscuro);
+    font-size: 0.95rem;
+    font-style: italic;
+    margin-top: 0; 
 }
