@@ -66,7 +66,7 @@ header nav a:hover {
 }
 
 .hero-titulo h1 {
-    font-size: 4.5rem; /* Tamaño grande para el título*/
+    font-size: 6rem; /* Tamaño grande para el título*/
     color: var(--fucsia-oscuro);
     letter-spacing: 2px;
     margin-bottom: 10px;
@@ -137,7 +137,7 @@ header nav a:hover {
     margin-right: auto;
 }
 
-.galletas h3 , .donas h3, .chocoloateria h3 {
+.galletas h3 , .donas h3, .chocolateria h3 {
     width: 100%; /* Empuja a las tarjetas hacia abajo */
     color: var(--texto-oscuro);
     font-size: 1.8rem;
