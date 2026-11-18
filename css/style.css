@@ -82,15 +82,32 @@ header nav a:hover {
 /* Slider por ahora solo es el limite del tamaño */
 
 .galeria-slider{
-    display: flex;
-    overflow: hidden;
-    height: 400px;
-    background-color: var(--rosa-medio);
+    width: 100%;
+    /* 1. Usamos una altura más amigable para pantallas y fotos (ej. 60vh que es el 60% de la altura de la pantalla, o un alto fijo mayor) */
+    height: 60vh; 
+    min-height: 400px;
+    max-height: 600px;
+    overflow: hidden; 
+    position: relative;
+    background-color: var(--rosa-principal); /* Solo por si demora en cargar la foto */
+}
+
+.slider-contenedor {
+   display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s ease-in-out;
 }
 
 .galeria-slider img {
-    width: 100%;
-    object-fit: cover; /* Llena el espacio sin deformarse */
+   width: 100%;       
+    height: 100%;
+    /* 2. Regresamos a cover, pero ahora la caja es más alta así que cortará menos */
+    object-fit: cover; 
+    
+    /* 3. Esto es el SECRETO: le decimos qué parte de la foto es la más importante si debe recortar */
+    object-position: center center; /* Mantiene el centro de la foto (el postre) siempre a la vista */
+    flex-shrink: 0;
 }
 
 /* Sección menú y tarjetas */
@@ -106,20 +123,21 @@ header nav a:hover {
     margin-bottom: 2rem;
 }
 
-/* Usamos grid para que las tarjetas se acomoden */
+/* Usamos flex para que las tarjetas se acomoden */
 
 .galletas, .donas {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ajusta el número de columnas según el tamaño de la pantalla */
-    gap: 30px; /* Espacio entre tarjetas */
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap; 
+    justify-content: center; 
     margin-bottom: 3rem;
-    max-width: 1200px;
+    max-width: 1300px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .galletas h3 , .donas h3 {
-    grid-column: 1 / -1; /* Hace que el subtítulo ocupe toda la fila */
+    width: 100%; /* Empuja a las tarjetas hacia abajo */
     color: var(--texto-oscuro);
     font-size: 1.8rem;
     margin-bottom: 1rem;
@@ -135,9 +153,13 @@ header nav a:hover {
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 4px 15px rgba(194, 24,91, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación para hover */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
+    
+    /* LA REGLA CLAVE: Cada tarjeta medirá exactamente 300px. 
+       Ni más ni menos, evitando que se estiren o se apilen a la izquierda */
+    width: 300px;
 }
 
 .card-producto:hover {
