@@ -532,7 +532,7 @@ header nav a:hover {
 /* 2. Botón flotante del carrito (esquina inferior derecha) */
 .carrito-flotante {
     position: fixed;
-    bottom: 25px;
+    bottom: 75px;
     right: 25px;
     background-color: var(--fucsia-oscuro);
     color: var(--blanco-puro);
