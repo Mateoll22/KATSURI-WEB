@@ -473,3 +473,150 @@ header nav a:hover {
     text-align: center;
     font-weight: bold;
 }
+
+/* Contador directo dentro de una tarjeta (Chocobombas) */
+.contador-card {
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.card-producto .contador-card button {
+    padding: 0;
+    border-radius: 50%;
+}
+
+/* =========================================
+   CARRITO DE COMPRAS Y BOTONES DOBLES
+   ========================================= */
+
+/* 1. Contenedor que pone PEDIR y +🛒 en la misma fila */
+.acciones-card, .acciones-modal {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Hace que el botón principal (PEDIR / PEDIR POR WHATSAPP) ocupe todo el ancho disponible */
+.acciones-card .btn-pedir,
+.acciones-modal .btn-confirmar {
+    flex: 1;
+}
+
+/* Botón circular chiquito (+🛒) */
+.card-producto .btn-agregar-card,
+.btn-agregar-modal {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    border-radius: 50%;
+    flex-shrink: 0; /* Evita que el círculo se aplaste */
+    background-color: var(--blanco-puro);
+    color: var(--fucsia-oscuro);
+    border: 2px solid var(--fucsia-oscuro);
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.card-producto .btn-agregar-card:hover,
+.btn-agregar-modal:hover {
+    background-color: var(--rosa-principal);
+    transform: scale(1.08);
+}
+
+/* 2. Botón flotante del carrito (esquina inferior derecha) */
+.carrito-flotante {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: var(--fucsia-oscuro);
+    color: var(--blanco-puro);
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(194, 24, 91, 0.35);
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s ease, background-color 0.2s;
+}
+
+.carrito-flotante:hover {
+    background-color: #a01249;
+    transform: scale(1.06);
+}
+
+/* Bolita blanca con el número de productos */
+#carrito-contador {
+    background-color: var(--blanco-puro);
+    color: var(--fucsia-oscuro);
+    border-radius: 50%;
+    min-width: 24px;
+    height: 24px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+}
+
+/* 3. Lista de productos dentro del Modal del Carrito */
+.carrito-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px; /* Si piden muchas cosas, aparece scroll solo aquí */
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.carrito-vacio {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 1.5rem 0;
+}
+
+.carrito-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--rosa-principal);
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+}
+
+.carrito-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.carrito-item-precio {
+    font-weight: bold;
+    color: var(--fucsia-oscuro);
+}
+
+.btn-eliminar-item {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 4px;
+    transition: transform 0.2s;
+}
+
+.btn-eliminar-item:hover {
+    transform: scale(1.2);
+}

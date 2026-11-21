@@ -44,7 +44,7 @@
                     <strong>Tamaños:</strong> Pequeña (8 x 3 cm) $1.00 | Grande (10 x 4 cm) $1.50
                 </p>
                 <p class="info-rellenos">
-                    <strong> Instrucciones:</strong> Para pedir, da click en "ELEGIR" y selecciona el tamaño y relleno de tu preferencia. Luego, haz click en "PEDIR POR WHATSAPP" para enviar tu pedido.
+                    <strong> Instrucciones:</strong> Para pedir, da click en "ELEGIR" y selecciona el tamaño y relleno (simple o especial) de tu preferencia. Luego, haz click en "PEDIR POR WHATSAPP" para enviar tu pedido.
                 </p>
             </div>
 
@@ -95,14 +95,20 @@
                 <h4>CAJA DE 4 GALLETAS CLÁSICAS</h4>
                 <p>Elige 4 de nuestras galletas clásicas recién horneadas y personalízalas con 2 toppings extra a tu elección. Ideal para regalar.</p>
                 <p class="precio">$5.00</p>
-                <button class="btn-pedir">PEDIR</button>
+                <div class="acciones-card"> 
+                    <button class="btn-pedir" data-precio="5.00">PEDIR</button>
+                    <button type="button" class="btn-agregar-card" title="Agregar al carrito">+🛒</button>
+                </div>
             </article>
             <article class="card-producto">
                 <img src="assets/img/galletas/mini_galletas.png" alt="Vaso mini galletas">
                 <h4>VASO DE 8 MINI GALLETAS + SIROPE DE CHOCOLATE</h4>
                 <p>Nuestras galletas estilo New York en versión bocado: crujientes, suaves por dentro y llenas de chispas de chocolate.</p>
                 <p class="precio">$1.50</p>
-                <button class="btn-pedir">PEDIR</button>
+                <div class="acciones-card">
+                    <button class="btn-pedir" data-precio="1.50">PEDIR</button>
+                    <button type="button" class="btn-agregar-card" title="Agregar al carrito">+🛒</button>
+                </div>
             </article>
         </div>
             
@@ -133,28 +139,40 @@
                 <h4> BOX 5 MINI DONAS</h4>
                 <p> 5 mini donas personalizadas con la temática que gustes, el nombre de la persona y detalles 100% comestibles. Ideal para regalar. </p>
                 <p class="precio"> $7.00 </p>
-                <button class="btn-pedir"> PEDIR </button>
+                <div class="acciones-card">
+                    <button class="btn-pedir" data-precio="7.00"> PEDIR </button>
+                    <button type="button" class="btn-agregar-card" title="Agregar al carrito">+🛒</button>
+                </div>
             </article>
             <article class="card-producto">
                 <img src="assets/img/donas/9_mini_donas.png " alt="9 mini_donas">
                 <h4> BOX 9 MINI DONAS</h4>
                 <p> 9 mini donas decoradas con tu temática favorita, el nombre de la persona y detalles 100% comestibles para sorprender y compartir. </p>
                 <p class="precio"> $10.00 </p>
-                <button class="btn-pedir"> PEDIR </button>
+                <div class="acciones-card">
+                    <button class="btn-pedir" data-precio="10.00"> PEDIR </button>
+                    <button type="button" class="btn-agregar-card" title="Agregar al carrito">+🛒</button>
+                </div>
             </article>
             <article class="card-producto">
                 <img src="assets/img/donas/30_mini_donas.jpg " alt="30 mini_donas">
                 <h4> PARTY BOX - 30 MINI DONAS</h4>
                 <p> 30 mini donas temáticas con el nombre de la persona y detalles 100% comestibles. La opción perfecta para eventos y celebraciones. </p>
                 <p class="precio"> $20.00 </p>
-                <button class="btn-pedir"> PEDIR </button>
+                <div class="acciones-card">
+                    <button class="btn-pedir" data-precio="20.00"> PEDIR </button>
+                    <button type="button" class="btn-agregar-card" title="Agregar al carrito">+🛒</button>
+                </div>
             </article>
             <article class="card-producto">
                 <img src="assets/img/donas/detalle_personalizado.jpg" alt="detalle_personalizado">
                 <h4> DETALLE PERSONALIZADO </h4>
                 <p> Caja de regalo personalizada con figura hueca de chocolate rellena de dulces (incluye martillo de madera para romper), acompañada de mini donas decoradas con temática a elección. Ideal para cumpleaños y ocasiones especiales. </p>
                 <p class="precio"> $12.00 </p>
-                <button class="btn-pedir"> PEDIR </button>
+                <div class="acciones-card">
+                    <button class="btn-pedir" data-precio="12.00"> PEDIR </button>
+                    <button type="button" class="btn-agregar-card" title="Agregar al carrito">+🛒</button>
+                </div>
             </article>
         </div>
         <!--Menú para chocolateria-->
@@ -173,14 +191,30 @@
                 <h4> CHOCOBOMBA - 6 cm </h4>
                 <p> Esfera de chocolate negro o blanco de 6 cm rellena de cacao y malvaviscos; solo agrega leche caliente y disfruta una bebida cremosa. </p>
                 <p class="precio"> $1.25 </p>
-                <button class="btn-pedir"> PEDIR </button>
+                <div class="contador contador-card">
+                    <button type="button" class="btn-menos-card">-</button>
+                    <span class="cantidad-valor">1</span>
+                    <button type="button" class="btn-mas-card">+</button>
+                </div>
+                <div class="acciones-card">
+                    <button class="btn-pedir" data-precio="1.25"> PEDIR </button>
+                    <button type="button" class="btn-agregar-card" title="Agregar al carrito">+🛒</button>
+                </div>
             </article>
             <article class="card-producto">
                 <img src="assets/img/chocobombas/chocobomba_7cm.jpg" alt="chocobomba">
                 <h4> CHOCOBOMBA - 7 cm </h4>
                 <p> Esfera grande de chocolate negro o blanco de 7 cm cargada con más cacao y malvaviscos que se derrite en leche caliente. </p>
                 <p class="precio"> $1.50 </p>
-                <button class="btn-pedir"> PEDIR </button>
+                <div class="contador contador-card">
+                    <button type="button" class="btn-menos-card">-</button>
+                    <span class="cantidad-valor">1</span>
+                    <button type="button" class="btn-mas-card">+</button>
+                </div>
+                <div class="acciones-card">
+                    <button class="btn-pedir" data-precio="1.50"> PEDIR </button>
+                    <button type="button" class="btn-agregar-card" title="Agregar al carrito">+🛒</button>
+                </div>
             </article>
             <article class="card-producto">
                 <img src="assets/img/chocobombas/chocooreo.jpg" alt="chocooreo">
@@ -203,14 +237,20 @@
                 <h4> CHURROS GRANDES </h4>
                 <p> Porción de 4 churros artesanales de tamaño grande, dorados y crujientes por fuera pero suaves por dentro. Espolvoreados con azúcar y bañados en sus puntas con delicioso chocolate fundido. </p>
                 <p class="precio"> $1.00 </p>
-                <button class="btn-pedir"> PEDIR </button>
+                <div class="acciones-card">
+                    <button class="btn-pedir" data-precio="1.00"> PEDIR </button>
+                    <button type="button" class="btn-agregar-card" title="Agregar al carrito">+🛒</button>
+                </div>
             </article>
             <article class="card-producto">
                 <img src="assets/img/churros_berlinesas/10_churros.jpg" alt="churros_artesanales">
                 <h4> CAJA DE MINI CHURROS </h4>
                 <p> Caja con 10 mini churros recién hechos, crujientes por fuera y tiernos por dentro, espolvoreados con azúcar. Incluye un tarrito o fundita de chocolate aparte para que los disfrutes dipeando a tu gusto. </p>
                 <p class="precio"> $1.00 </p>
-                <button class="btn-pedir"> PEDIR </button>
+                <div class="acciones-card">
+                    <button class="btn-pedir" data-precio="1.00"> PEDIR </button>
+                    <button type="button" class="btn-agregar-card" title="Agregar al carrito">+🛒</button>
+                </div>
             </article>
             <article class="card-producto">
                 <img src="assets/img/churros_berlinesas/berlinesas.jpg" alt="berlinesas_rellenas">
@@ -258,21 +298,37 @@
             <div class="modal-campo" id="campo-relleno">
                 <label for="select-relleno">Elige tu relleno:</label>
                 <select id="select-relleno">
-                    <option value="Manjar">Manjar</option>
-                    <option value="Cheesecake">Cheesecake</option>
-                    <option value="Masmelos">Masmelos</option>
-                    <option value="Nutella">Nutella</option>
-                    <option value="Kinder">Kinder</option>
-                    <option value="Nucita">Nucita</option>
-                    <option value="Galak">Galak</option>
-                    <option value="Oreo">Oreo</option>
-                    <option value="Mermelada de mora">Mermelada de mora</option>
+                    <optgroup label="Rellenos Simples">
+                        <option value="Manjar" data-extra="0">Manjar</option>
+                        <option value="Cheesecake" data-extra="0">Cheesecake</option>
+                        <option value="Masmelos" data-extra="0">Masmelos</option>
+                    </optgroup>
+                    <optgroup label="Rellenos Especiales (+$0.50)">
+                        <option value="Nutella" data-extra="0.50">Nutella (+$0.50)</option>
+                        <option value="Kinder" data-extra="0.50">Kinder (+$0.50)</option>
+                        <option value="Nucita" data-extra="0.50">Nucita (+$0.50)</option>
+                        <option value="Galak" data-extra="0.50">Galak (+$0.50)</option>
+                        <option value="Oreo" data-extra="0.50">Oreo (+$0.50)</option>
+                        <option value="Mermelada de mora" data-extra="0.50">Mermelada de mora (+$0.50)</option>
+                    </optgroup>
                 </select>
                 <img id="preview-relleno" class="preview-relleno" src="assets/img/rellenos/manjar.jpg" alt="Vista previa del relleno">
             </div>
 
+            <div class="sabor-fila">
+                <span>Cantidad:</span>
+                <div class="contador">
+                    <button type="button" id="galleta-menos">-</button>
+                    <span id="galleta-cant" class="cantidad-valor">1</span>
+                    <button type="button" id="galleta-mas">+</button>
+                </div>
+            </div>
+
             <p class="modal-precio">Total: <span id="modal-precio-valor">$1.00</span></p>
-            <button id="btn-confirmar-pedido" class="btn-confirmar">PEDIR POR WHATSAPP</button>
+                <div class="acciones-modal">
+                    <button id="btn-confirmar-pedido" class="btn-confirmar">PEDIR POR WHATSAPP</button>
+                    <button type="button" id="btn-carrito-galleta" class="btn-agregar-modal" title="Agregar al carrito">+🛒</button>
+                </div>
         </div>
     </div>
 
@@ -313,8 +369,20 @@
                 </div>
             </div>
 
+            <div class="sabor-fila">
+                <span>Cantidad:</span>
+                <div class="contador">
+                    <button type="button" id="dona-menos">-</button>
+                    <span id="dona-cant" class="cantidad-valor">1</span>
+                    <button type="button" id="dona-mas">+</button>
+                </div>
+            </div>
+
             <p class="modal-precio">Total: <span id="modal-dona-precio">$0.75</span></p>
-            <button id="btn-confirmar-dona" class="btn-confirmar">PEDIR POR WHATSAPP</button>
+                <div class="acciones-modal">
+                    <button id="btn-confirmar-dona" class="btn-confirmar">PEDIR POR WHATSAPP</button>
+                    <button type="button" id="btn-carrito-dona" class="btn-agregar-modal" title="Agregar al carrito">+🛒</button>
+                </div>
         </div>
     </div>
 
@@ -349,7 +417,10 @@
             </div>
 
             <p class="modal-precio">Total: <span id="modal-oreo-precio">$0.50</span></p>
-            <button id="btn-confirmar-oreo" class="btn-confirmar">PEDIR POR WHATSAPP</button>
+                <div class="acciones-modal">
+                    <button id="btn-confirmar-oreo" class="btn-confirmar">PEDIR POR WHATSAPP</button>
+                    <button type="button" id="btn-carrito-oreo" class="btn-agregar-modal" title="Agregar al carrito">+🛒</button>
+                </div>
         </div>
     </div>
     <!-- Modal Berlinesas -->
@@ -400,10 +471,36 @@
             <p class="modal-precio">
                 Total (<span id="berlinesa-total-cant">0</span>): <span id="berlinesa-total-precio">$0.00</span>
             </p>
-            <button id="btn-confirmar-berlinesa" class="btn-confirmar">PEDIR POR WHATSAPP</button>
+                <div class="acciones-modal">
+                    <button id="btn-confirmar-berlinesa" class="btn-confirmar">PEDIR POR WHATSAPP</button>
+                    <button type="button" id="btn-carrito-berlinesa" class="btn-agregar-modal" title="Agregar al carrito">+🛒</button>
+                </div>
+        </div>
+    </div>
+
+
+    <!-- Botón flotante del Carrito -->
+    <button id="btn-abrir-carrito" class="carrito-flotante" title="Ver carrito">
+        🛒 <span id="carrito-contador">0</span>
+    </button>
+
+    <!-- Modal del Carrito de Compras -->
+    <div id="modal-carrito" class="modal-overlay">
+        <div class="modal-contenido">
+            <button id="cerrar-modal-carrito" class="modal-cerrar">&times;</button>
+            <h3>TU CARRITO 🛒</h3>
+
+            <div id="carrito-lista" class="carrito-lista">
+                <p class="carrito-vacio">Tu carrito está vacío.</p>
+            </div>
+
+            <p class="modal-precio">Total: <span id="carrito-total">$0.00</span></p>
+            <button id="btn-enviar-carrito" class="btn-confirmar">ENVIAR PEDIDO POR WHATSAPP</button>
         </div>
     </div>
 
 </body>
+
+
 
 </html>

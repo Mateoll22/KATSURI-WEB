@@ -4,23 +4,56 @@ const botonesPedir = document.querySelectorAll('.btn-pedir');
 // 2. Definimos tu número de WhatsApp (sin el signo +, solo el código de país y el número)
 const numeroWhatsApp = "593995684344";
 
-// 3. Recorremos cada botón para agregarle la función del "clic"
+// Contadores directos en tarjetas (Chocobombas) con precio en el botón
+document.querySelectorAll('.contador-card').forEach(bloque => {
+    const tarjeta = bloque.closest('.card-producto');
+    const btnMenos = bloque.querySelector('.btn-menos-card');
+    const btnMas = bloque.querySelector('.btn-mas-card');
+    const spanCant = bloque.querySelector('.cantidad-valor');
+    const btnPedir = tarjeta.querySelector('.btn-pedir');
+    const precioUnit = parseFloat(btnPedir.dataset.precio);
+
+    function actualizarBoton(cant) {
+        btnPedir.innerText = `PEDIR — $${(cant * precioUnit).toFixed(2)}`;
+    }
+
+    // Muestra el precio en el botón desde que carga la página
+    actualizarBoton(1);
+
+    btnMas.addEventListener('click', () => {
+        const nuevaCant = parseInt(spanCant.innerText) + 1;
+        spanCant.innerText = nuevaCant;
+        actualizarBoton(nuevaCant);
+    });
+
+    btnMenos.addEventListener('click', () => {
+        const actual = parseInt(spanCant.innerText);
+        if (actual > 1) {
+            const nuevaCant = actual - 1;
+            spanCant.innerText = nuevaCant;
+            actualizarBoton(nuevaCant);
+        }
+    });
+});
+
+// Botones PEDIR directos
 botonesPedir.forEach(boton => {
     boton.addEventListener('click', (evento) => {
-        
-        // a) Encontramos la tarjeta exacta donde el usuario hizo clic
         const tarjeta = evento.target.closest('.card-producto');
-        
-        // b) Extraemos el texto del <h4> (El nombre del postre)
         const nombrePostre = tarjeta.querySelector('h4').innerText;
-        
-        // c) Armamos el mensaje predeterminado
-        const mensaje = `¡Hola KATSURI! 🌸 Me gustaría pedir: ${nombrePostre}. ¿Sigue disponible?`;
-        
-        // d) Convertimos el mensaje a un formato de enlace (para que lea los espacios y símbolos)
+        const spanCant = tarjeta.querySelector('.cantidad-valor');
+
+        let mensaje = '';
+        if (spanCant) {
+            const cant = parseInt(spanCant.innerText);
+            const precioUnit = parseFloat(boton.dataset.precio || 0);
+            const total = (cant * precioUnit).toFixed(2);
+            mensaje = `¡Hola KATSURI! 🌸 Me gustaría pedir: ${cant}x ${nombrePostre} ($${total}). ¿Sigue disponible?`;
+        } else {
+            mensaje = `¡Hola KATSURI! 🌸 Me gustaría pedir: ${nombrePostre}. ¿Sigue disponible?`;
+        }
+
         const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-        
-        // e) Abrimos WhatsApp en una pestaña nueva
         window.open(urlWhatsApp, '_blank');
     });
 });
@@ -80,10 +113,41 @@ const botonesElegir = document.querySelectorAll('.btn-elegir');
 let productoActual = { nombre: '', tipo: '', precioPeq: '', precioGra: '' };
 
 function actualizarPrecioModal() {
-    const precio = selectTamano.value === 'Pequeña' ? productoActual.precioPeq : productoActual.precioGra;
-    modalPrecioValor.innerText = `$${precio}`;
+    let precio = parseFloat(
+        selectTamano.value === 'Pequeña' ? productoActual.precioPeq : productoActual.precioGra
+    );
+
+    // Si es galleta con relleno, sumamos el extra del relleno elegido (0 o 0.50)
+    if (productoActual.tipo === 'con-relleno') {
+        const opcionRelleno = selectRelleno.options[selectRelleno.selectedIndex];
+        precio += parseFloat(opcionRelleno.dataset.extra || 0);
+    }
+
+    modalPrecioValor.innerText = `$${(precio * cantidadGalleta).toFixed(2)}`;
 }
 
+// 1. ESTO VA AFUERA (se declara una sola vez)
+const btnGalletaMenos = document.getElementById('galleta-menos');
+const btnGalletaMas = document.getElementById('galleta-mas');
+const spanGalletaCant = document.getElementById('galleta-cant');
+let cantidadGalleta = 1;
+
+btnGalletaMas.addEventListener('click', () => {
+    cantidadGalleta++;
+    spanGalletaCant.innerText = cantidadGalleta;
+    actualizarPrecioModal();
+});
+
+btnGalletaMenos.addEventListener('click', () => {
+    if (cantidadGalleta > 1) {
+        cantidadGalleta--;
+        spanGalletaCant.innerText = cantidadGalleta;
+        actualizarPrecioModal();
+        
+    }
+});
+
+// 2. ESTO ES SOLO PARA ABRIR EL MODAL Y REINICIAR A 1
 botonesElegir.forEach(boton => {
     boton.addEventListener('click', (evento) => {
         const tarjeta = evento.target.closest('.card-producto');
@@ -94,6 +158,10 @@ botonesElegir.forEach(boton => {
 
         modalTitulo.innerText = productoActual.nombre;
         selectTamano.value = 'Pequeña';
+
+        // Reiniciamos la cantidad a 1 cada vez que abren una galleta
+        cantidadGalleta = 1;
+        spanGalletaCant.innerText = 1;
 
         // Muestra el selector de relleno solo si es galleta con relleno
         campoRelleno.style.display = productoActual.tipo === 'con-relleno' ? 'block' : 'none';
@@ -116,7 +184,7 @@ modal.addEventListener('click', (e) => {
 btnConfirmar.addEventListener('click', () => {
     const tamano = selectTamano.value;
     const precio = modalPrecioValor.innerText;
-    let mensaje = `¡Hola KATSURI! 🌸 Me gustaría pedir: ${productoActual.nombre} - Tamaño: ${tamano}`;
+    let mensaje = `¡Hola KATSURI! 🌸 Me gustaría pedir: ${cantidadGalleta}x ${productoActual.nombre} - Tamaño: ${tamano}`;
 
     if (productoActual.tipo === 'con-relleno') {
         mensaje += ` - Relleno: ${selectRelleno.value}`;
@@ -152,9 +220,12 @@ function actualizarImagenRelleno() {
 }
 
 // Cambia la foto cada vez que el cliente elige otro relleno
-selectRelleno.addEventListener('change', actualizarImagenRelleno);
+selectRelleno.addEventListener('change', () => {
+    actualizarImagenRelleno();
+    actualizarPrecioModal();
+});
 
-// --- LÓGICA DEL MODAL PARA DONAS GRANDES (SOLO TOPPINGS) ---
+// --- LÓGICA DEL MODAL PARA DONAS GRANDES (TOPPINGS + CANTIDAD) ---
 const modalDona = document.getElementById('modal-dona');
 const cerrarModalDona = document.getElementById('cerrar-modal-dona');
 const modalDonaTitulo = document.getElementById('modal-dona-titulo');
@@ -162,6 +233,12 @@ const checksToppings = document.querySelectorAll('.check-topping');
 const modalDonaPrecio = document.getElementById('modal-dona-precio');
 const btnConfirmarDona = document.getElementById('btn-confirmar-dona');
 const botonesElegirDona = document.querySelectorAll('.btn-elegir-dona');
+
+// 1. Variables y botones del contador (AFUERA del forEach)
+const btnDonaMenos = document.getElementById('dona-menos');
+const btnDonaMas = document.getElementById('dona-mas');
+const spanDonaCant = document.getElementById('dona-cant');
+let cantidadDona = 1;
 
 let donaActual = { nombre: '', precioBase: 0 };
 
@@ -174,10 +251,26 @@ function actualizarPrecioDona() {
         }
     });
 
-    modalDonaPrecio.innerText = `$${total.toFixed(2)}`;
+    // Multiplica el precio unitario (dona + toppings) por la cantidad
+    modalDonaPrecio.innerText = `$${(total * cantidadDona).toFixed(2)}`;
 }
 
-// Abrir modal capturando nombre y precio de la tarjeta donde se hizo clic
+// Eventos de + y -
+btnDonaMas.addEventListener('click', () => {
+    cantidadDona++;
+    spanDonaCant.innerText = cantidadDona;
+    actualizarPrecioDona();
+});
+
+btnDonaMenos.addEventListener('click', () => {
+    if (cantidadDona > 1) {
+        cantidadDona--;
+        spanDonaCant.innerText = cantidadDona;
+        actualizarPrecioDona();
+    }
+});
+
+// 2. Abrir modal capturando nombre, precio y reiniciando la cantidad a 1
 botonesElegirDona.forEach(boton => {
     boton.addEventListener('click', (evento) => {
         const tarjeta = evento.target.closest('.card-producto');
@@ -186,6 +279,9 @@ botonesElegirDona.forEach(boton => {
 
         modalDonaTitulo.innerText = donaActual.nombre;
         checksToppings.forEach(check => check.checked = false);
+
+        cantidadDona = 1;
+        spanDonaCant.innerText = 1;
 
         actualizarPrecioDona();
         modalDona.classList.add('activo');
@@ -201,7 +297,7 @@ modalDona.addEventListener('click', (e) => {
     if (e.target === modalDona) modalDona.classList.remove('activo');
 });
 
-// Enviar pedido a WhatsApp
+// Enviar pedido a WhatsApp con la cantidad incluida
 btnConfirmarDona.addEventListener('click', () => {
     const precio = modalDonaPrecio.innerText;
 
@@ -214,7 +310,7 @@ btnConfirmarDona.addEventListener('click', () => {
         ? toppingsElegidos.join(', ')
         : 'Sin toppings';
 
-    const mensaje = `¡Hola KATSURI! 🌸 Me gustaría pedir: ${donaActual.nombre} - Toppings: ${textoToppings} (${precio}). ¿Sigue disponible?`;
+    const mensaje = `¡Hola KATSURI! 🌸 Me gustaría pedir: ${cantidadDona}x ${donaActual.nombre} - Toppings: ${textoToppings} (${precio}). ¿Sigue disponible?`;
     const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
 
     window.open(urlWhatsApp, '_blank');
@@ -362,4 +458,193 @@ btnConfirmarBerlinesa.addEventListener('click', () => {
 
     window.open(urlWhatsApp, '_blank');
     modalBerlinesa.classList.remove('activo');
+});
+
+// =========================================
+// LÓGICA DEL CARRITO DE COMPRAS
+// =========================================
+
+// 1. ESTADO: Aquí se guardan los productos que el cliente va agregando
+let carrito = [];
+
+const btnAbrirCarrito = document.getElementById('btn-abrir-carrito');
+const modalCarrito = document.getElementById('modal-carrito');
+const cerrarModalCarrito = document.getElementById('cerrar-modal-carrito');
+const carritoContador = document.getElementById('carrito-contador');
+const carritoLista = document.getElementById('carrito-lista');
+const carritoTotal = document.getElementById('carrito-total');
+const btnEnviarCarrito = document.getElementById('btn-enviar-carrito');
+
+// 2. FUNCIÓN PARA AGREGAR AL CARRITO
+function agregarAlCarrito(descripcion, precio) {
+    carrito.push({ descripcion, precio });
+    actualizarCarritoUI();
+
+    // Pequeño efecto visual en el botón flotante para confirmar que se agregó
+    btnAbrirCarrito.style.transform = 'scale(1.2)';
+    setTimeout(() => btnAbrirCarrito.style.transform = '', 200);
+}
+
+// 3. FUNCIÓN PARA DIBUJAR EL CARRITO EN PANTALLA Y SUMAR EL TOTAL
+function actualizarCarritoUI() {
+    carritoContador.innerText = carrito.length;
+
+    // Si está vacío, mostramos el mensaje inicial
+    if (carrito.length === 0) {
+        carritoLista.innerHTML = '<p class="carrito-vacio">Tu carrito está vacío.</p>';
+        carritoTotal.innerText = '$0.00';
+        return;
+    }
+
+    carritoLista.innerHTML = '';
+    let total = 0;
+
+    carrito.forEach((item, indice) => {
+        total += item.precio;
+
+        // Creamos la fila de cada producto con su botón de borrar
+        const div = document.createElement('div');
+        div.classList.add('carrito-item');
+        div.innerHTML = `
+            <div class="carrito-item-info">
+                <span>${item.descripcion}</span>
+                <span class="carrito-item-precio">$${item.precio.toFixed(2)}</span>
+            </div>
+            <button type="button" class="btn-eliminar-item" data-indice="${indice}" title="Quitar">🗑️</button>
+        `;
+        carritoLista.appendChild(div);
+    });
+
+    carritoTotal.innerText = `$${total.toFixed(2)}`;
+
+    // Activamos los botones de eliminar (🗑️) que acabamos de crear
+    document.querySelectorAll('.btn-eliminar-item').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const indice = parseInt(e.target.dataset.indice);
+            carrito.splice(indice, 1); // Borra 1 elemento en esa posición
+            actualizarCarritoUI();     // Vuelve a dibujar la lista actualizada
+        });
+    });
+}
+
+// Abrir y cerrar el modal del carrito
+btnAbrirCarrito.addEventListener('click', () => modalCarrito.classList.add('activo'));
+cerrarModalCarrito.addEventListener('click', () => modalCarrito.classList.remove('activo'));
+modalCarrito.addEventListener('click', (e) => {
+    if (e.target === modalCarrito) modalCarrito.classList.remove('activo');
+});
+
+// -----------------------------------------
+// 4. CONECTAR TODOS LOS BOTONES "+🛒"
+// -----------------------------------------
+
+// A) Tarjetas directas (Cajas, Mini Donas, Chocobombas, Churros)
+document.querySelectorAll('.btn-agregar-card').forEach(boton => {
+    boton.addEventListener('click', (evento) => {
+        const tarjeta = evento.target.closest('.card-producto');
+        const nombre = tarjeta.querySelector('h4').innerText;
+        const btnPedir = tarjeta.querySelector('.btn-pedir');
+        const precioUnit = parseFloat(btnPedir.dataset.precio || 0);
+        const spanCant = tarjeta.querySelector('.cantidad-valor');
+
+        // Si la tarjeta tiene contador (Chocobombas), multiplicamos por su cantidad
+        const cant = spanCant ? parseInt(spanCant.innerText) : 1;
+        const subtotal = cant * precioUnit;
+        const descripcion = cant > 1 ? `${cant}x ${nombre}` : nombre;
+
+        agregarAlCarrito(descripcion, subtotal);
+    });
+});
+
+// B) Desde el Modal de Galletas
+document.getElementById('btn-carrito-galleta').addEventListener('click', () => {
+    const tamano = selectTamano.value;
+    // Quitamos el "$" del texto del total para convertirlo en número
+    const precio = parseFloat(modalPrecioValor.innerText.replace('$', ''));
+    let descripcion = `${cantidadGalleta}x ${productoActual.nombre} (${tamano}`;
+
+    if (productoActual.tipo === 'con-relleno') {
+        descripcion += `, Relleno: ${selectRelleno.value}`;
+    }
+    descripcion += ')';
+
+    agregarAlCarrito(descripcion, precio);
+    modal.classList.remove('activo');
+});
+
+// C) Desde el Modal de Donas Grandes
+document.getElementById('btn-carrito-dona').addEventListener('click', () => {
+    const precio = parseFloat(modalDonaPrecio.innerText.replace('$', ''));
+    const toppings = [];
+    checksToppings.forEach(check => {
+        if (check.checked) toppings.push(check.value);
+    });
+
+    const textoToppings = toppings.length > 0 ? toppings.join(', ') : 'Sin toppings';
+    const descripcion = `${cantidadDona}x ${donaActual.nombre} (${textoToppings})`;
+
+    agregarAlCarrito(descripcion, precio);
+    modalDona.classList.remove('activo');
+});
+
+// D) Desde el Modal de Choco Oreos
+document.getElementById('btn-carrito-oreo').addEventListener('click', () => {
+    const cantidad = selectCantidadOreo.value;
+    const precio = parseFloat(modalOreoPrecio.innerText.replace('$', ''));
+    const coberturas = [];
+    checksCobertura.forEach(check => {
+        if (check.checked) coberturas.push(check.value);
+    });
+
+    const textoCobertura = coberturas.length > 0 ? coberturas.join(' y ') : 'A elección';
+    const descripcion = `CHOCO OREOS (${cantidad} - ${textoCobertura})`;
+
+    agregarAlCarrito(descripcion, precio);
+    modalOreo.classList.remove('activo');
+});
+
+// E) Desde el Modal de Berlinesas
+document.getElementById('btn-carrito-berlinesa').addEventListener('click', () => {
+    const totalCant = parseInt(berlinesaTotalCant.innerText);
+
+    if (totalCant === 0) {
+        alert('Por favor elige al menos 1 berlinesa antes de agregar al carrito.');
+        return;
+    }
+
+    const detalleSabores = [];
+    filasSabores.forEach(fila => {
+        const cant = parseInt(fila.querySelector('.cantidad-valor').innerText);
+        if (cant > 0) detalleSabores.push(`${cant} de ${fila.dataset.sabor}`);
+    });
+
+    const precio = parseFloat(berlinesaTotalPrecio.innerText.replace('$', ''));
+    const descripcion = `${totalCant}x BERLINESAS RELLENAS (${detalleSabores.join(', ')})`;
+
+    agregarAlCarrito(descripcion, precio);
+    modalBerlinesa.classList.remove('activo');
+});
+
+// -----------------------------------------
+// 5. ENVIAR TODO EL CARRITO A WHATSAPP
+// -----------------------------------------
+btnEnviarCarrito.addEventListener('click', () => {
+    if (carrito.length === 0) {
+        alert('Tu carrito está vacío. Agrega al menos un postre primero.');
+        return;
+    }
+
+    let mensaje = '¡Hola KATSURI! 🌸 Me gustaría hacer el siguiente pedido:\n\n';
+    carrito.forEach(item => {
+        mensaje += `• ${item.descripcion} — $${item.precio.toFixed(2)}\n`;
+    });
+    mensaje += `\n*Total: ${carritoTotal.innerText}*\n¿Sigue disponible?`;
+
+    const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+    window.open(urlWhatsApp, '_blank');
+
+    // Vaciamos el carrito y cerramos el modal después de enviar
+    carrito = [];
+    actualizarCarritoUI();
+    modalCarrito.classList.remove('activo');
 });
